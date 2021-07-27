@@ -159,6 +159,7 @@ public class ProviderDashboardActivity extends ACBaseActivity implements Provide
         }
     }
 
+
     private static void animateFAB(boolean isFABClosed) {
         if (!isFABClosed) {
             ObjectAnimator.ofFloat(expandableFAB, "rotation", 0f, 180f).setDuration(500).start();

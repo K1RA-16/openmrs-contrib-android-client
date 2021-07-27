@@ -13,6 +13,7 @@
  */
 package org.openmrs.mobile.activities.settings
 
+import android.widget.Toast
 import org.openmrs.mobile.activities.BasePresenter
 import org.openmrs.mobile.application.OpenMRS
 import org.openmrs.mobile.application.OpenMRSLogger
@@ -22,11 +23,16 @@ import org.openmrs.mobile.utilities.ApplicationConstants
 import org.openmrs.mobile.utilities.LanguageUtils
 import org.openmrs.mobile.utilities.ThemeUtils
 import java.io.File
+import kotlin.coroutines.coroutineContext
 
 class SettingsPresenter(private val mSettingsView: SettingsContract.View, private val mOpenMRSLogger: OpenMRSLogger,
                         private var conceptRoomDAO: ConceptRoomDAO) : BasePresenter(), SettingsContract.Presenter {
 
-    constructor(view: SettingsContract.View, logger: OpenMRSLogger) : this(view, logger, AppDatabase.getDatabase(OpenMRS.getInstance().applicationContext).conceptRoomDAO())
+    constructor(view: SettingsContract.View, logger: OpenMRSLogger) : this(
+        view,
+        logger,
+        AppDatabase.getDatabase(OpenMRS.getInstance().applicationContext).conceptRoomDAO()
+    )
 
     init {
         mSettingsView.setPresenter(this)
@@ -81,14 +87,10 @@ class SettingsPresenter(private val mSettingsView: SettingsContract.View, privat
 
     override val languagePosition: Int
         get() {
-            val lang = LanguageUtils.getLanguage()
-            val languageList = ApplicationConstants.OpenMRSlanguage.LANGUAGE_LIST
-            var i = 0
-            while (i < languageList.size) {
-                if (lang == languageList[i]) {
+            for (i in 0..ApplicationConstants.OpenMRSlanguage.LANGUAGE_CODE.size) {
+                if (LanguageUtils.getLanguage() == ApplicationConstants.OpenMRSlanguage.LANGUAGE_CODE[i]) {
                     return i
                 }
-                i++
             }
             return 0
         }

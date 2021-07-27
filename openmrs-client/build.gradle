@@ -29,6 +29,9 @@ def GOOGLE_PLACE_API_KEY = System.getenv('GOOGLE_PLACE_API_KEY') ?: "YOUR_API_KE
 android {
     compileSdkVersion versions.compileSdk
 
+    lintOptions {
+        ignore("UseCompatLoadingForDrawables")
+    }
     def travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
     def buildNumber = (travisBuildNumber) ? (travisBuildNumber as int) : 1
 

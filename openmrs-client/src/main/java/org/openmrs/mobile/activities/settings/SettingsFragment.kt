@@ -26,13 +26,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
+import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
-import android.widget.CompoundButton
-import android.widget.TextView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import com.google.android.material.snackbar.Snackbar.SnackbarLayout
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseFragment
@@ -49,6 +47,7 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
@@ -74,6 +73,7 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
     override fun setConceptsInDbText(text: String?) {
         if (text == "0") {
             binding.conceptsDownloadButton.isEnabled = true
+
             val snackbar = Snackbar.make(binding.root, "", Snackbar.LENGTH_INDEFINITE)
             val customSnackBarView = layoutInflater.inflate(R.layout.snackbar, null)
             val snackBarLayout = snackbar.view as SnackbarLayout
@@ -180,11 +180,14 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
             languageSpinner.onItemSelectedListener = object : OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     mPresenter?.language = ApplicationConstants.OpenMRSlanguage.LANGUAGE_CODE[position]
+
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         }
+
+
     }
 
     companion object {
@@ -194,6 +197,7 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
     }
 
     override fun onDestroyView() {
+
         super.onDestroyView()
         _binding = null
     }
